@@ -1,5 +1,14 @@
-import { Box, TextField, Button, Typography } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Button,
+  Typography,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import { useState } from "react";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 function App() {
   const [usernameQuery, setUsernameQuery] = useState<string>("");
@@ -37,7 +46,24 @@ function App() {
         <>
           <Typography variant="body1">{`Showing users for "${usernameQuery}"`}</Typography>
           {users.map((user) => {
-            return <Typography variant="body1">{user.username}</Typography>;
+            return (
+              <Accordion>
+                <AccordionSummary
+                  expandIcon={<ExpandMoreIcon />}
+                  aria-controls="panel1a-content"
+                  id="panel1a-header"
+                >
+                  <Typography variant="body1">{user.username}</Typography>
+                </AccordionSummary>
+                <AccordionDetails>
+                  <Typography>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    Suspendisse malesuada lacus ex, sit amet blandit leo
+                    lobortis eget.
+                  </Typography>
+                </AccordionDetails>
+              </Accordion>
+            );
           })}
         </>
       )}
