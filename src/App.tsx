@@ -9,21 +9,30 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useGetUsersByUsernameQuery } from "./redux/user.query";
 
 function App() {
   const [usernameQuery, setUsernameQuery] = useState<string>("");
-
-  const [users, setUsers] = useState<{ username: string }[]>([]);
+  const [usernameKeyword, setUsernameKeyword] = useState<string>("");
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUsernameQuery(e.target.value);
-    setUsers([]);
   };
+
+  const { data: users } = useGetUsersByUsernameQuery(
+    {
+      params: {
+        q: usernameKeyword,
+      },
+    },
+    { skip: !usernameKeyword },
+  );
 
   const handleClick = () => {
-    setUsers([{ username: "Zeha" }, { username: "Raj" }]);
+    setUsernameKeyword(usernameQuery);
   };
 
+  console.log(users);
   return (
     <Box
       sx={{
@@ -42,18 +51,18 @@ function App() {
         Search
       </Button>
 
-      {usernameQuery && users.length > 0 && (
+      {usernameKeyword && users?.length > 0 && (
         <>
-          <Typography variant="body1">{`Showing users for "${usernameQuery}"`}</Typography>
-          {users.map((user) => {
+          <Typography variant="body1">{`Showing users for "${usernameKeyword}"`}</Typography>
+          {users.map((user: any) => {
             return (
-              <Accordion>
+              <Accordion key={user.id}>
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography variant="body1">{user.username}</Typography>
+                  <Typography variant="body1">{user.login}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <Typography>
