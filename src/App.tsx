@@ -25,7 +25,7 @@ function App() {
     {
       params: {
         q: usernameKeyword,
-        limit: 3,
+        per_page: 5,
       },
     },
     { skip: !usernameKeyword },
@@ -33,6 +33,12 @@ function App() {
 
   const handleClick = () => {
     setUsernameKeyword(usernameQuery);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      handleClick();
+    }
   };
 
   return (
@@ -45,6 +51,7 @@ function App() {
       }}
     >
       <TextField
+        onKeyDown={handleKeyDown}
         value={usernameQuery}
         onChange={handleChange}
         placeholder="Enter Username"

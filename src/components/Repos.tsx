@@ -1,5 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import { useGetReposByUsernameQuery } from "../redux/repo.query";
+import StarIcon from "@mui/icons-material/Star";
 
 interface ReposProps {
   username: string;
@@ -19,9 +20,20 @@ const Repos = (props: ReposProps) => {
       {repos.map((repo: any) => {
         return (
           <Box key={repo.id} sx={{ border: "1px solid lightgrey" }}>
-            <Typography variant="h6">{repo.name}</Typography>
+            <Box
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+              }}
+            >
+              <Typography variant="h6">{repo.name}</Typography>
+              <div style={{ display: "flex" }}>
+                <Typography variant="h6">{repo.stargazers_count}</Typography>
+                <StarIcon />
+              </div>
+            </Box>
             <Typography variant="caption">{repo.description}</Typography>
-            <Typography variant="caption">{repo.stargazers_count}</Typography>
           </Box>
         );
       })}
