@@ -1,15 +1,21 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-// import { getToken } from "../../utils/getToken";
-// import { getCurrentTimestamp } from "../../utils/getCurrentTimestamp";
+
 
 const baseUrl = "https://api.github.com/";
 
 // Define a service using a base URL and expected endpoints
 export const userApi = createApi({
   reducerPath: "userApi",
-    baseQuery: retry(
+  baseQuery: retry(
     fetchBaseQuery({
       baseUrl,
+      prepareHeaders: (headers) => {
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+        if(token){
+          headers.set("Authorization", `Bearer ${token}`);
+        }
+          return headers;
+        },
     }),
     { maxRetries: 3 },
   ),

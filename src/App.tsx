@@ -11,6 +11,8 @@ import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useGetUsersByUsernameQuery } from "./redux/user.query";
 
+import Repos from "./components/Repos";
+
 function App() {
   const [usernameQuery, setUsernameQuery] = useState<string>("");
   const [usernameKeyword, setUsernameKeyword] = useState<string>("");
@@ -23,6 +25,7 @@ function App() {
     {
       params: {
         q: usernameKeyword,
+        limit: 3,
       },
     },
     { skip: !usernameKeyword },
@@ -32,7 +35,6 @@ function App() {
     setUsernameKeyword(usernameQuery);
   };
 
-  console.log(users);
   return (
     <Box
       sx={{
@@ -65,11 +67,7 @@ function App() {
                   <Typography variant="body1">{user.login}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <Typography>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Suspendisse malesuada lacus ex, sit amet blandit leo
-                    lobortis eget.
-                  </Typography>
+                  <Repos username={user.login} />
                 </AccordionDetails>
               </Accordion>
             );
