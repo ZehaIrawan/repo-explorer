@@ -70,6 +70,7 @@ function App() {
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"
+                  sx={{ backgroundColor: "#F2F2F2" }}
                 >
                   <Typography variant="body1">{user.login}</Typography>
                 </AccordionSummary>

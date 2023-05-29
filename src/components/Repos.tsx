@@ -19,7 +19,15 @@ const Repos = (props: ReposProps) => {
     <>
       {repos.map((repo: any) => {
         return (
-          <Box key={repo.id} sx={{ border: "1px solid lightgrey" }}>
+          <Box
+            key={repo.id}
+            sx={{
+              border: "1px solid lightgrey",
+              backgroundColor: "#E0E0E0",
+              padding: "6px",
+              margin: "12px 0 0 12px",
+            }}
+          >
             <Box
               sx={{
                 display: "flex",
@@ -27,9 +35,9 @@ const Repos = (props: ReposProps) => {
                 alignItems: "flex-start",
               }}
             >
-              <Typography variant="h6">{repo.name}</Typography>
+              <Typography variant="h5">{repo.name}</Typography>
               <div style={{ display: "flex" }}>
-                <Typography variant="h6">{repo.stargazers_count}</Typography>
+                <Typography variant="h5">{repo.stargazers_count}</Typography>
                 <StarIcon />
               </div>
             </Box>
