@@ -1,27 +1,25 @@
-import {
-  Box,
-  TextField,
-  Button,
-  Typography,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-} from "@mui/material";
+import { Box, Typography, styled, CircularProgress } from "@mui/material";
 import { useState } from "react";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useGetUsersByUsernameQuery } from "./redux/user/user.query";
+import UserAccordion from "./components/UserAccordion";
+import SearchBar from "./components/Searchbar";
+import { IReduxUser } from "./redux/user/user.d";
 
-import Repos from "./components/Repos";
+const RootBox = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  width: "400px",
+  gap: "16px",
+});
+
+const Loader = styled(CircularProgress)({
+  margin: "0 auto",
+});
 
 function App() {
-  const [usernameQuery, setUsernameQuery] = useState<string>("");
-  const [usernameKeyword, setUsernameKeyword] = useState<string>("");
+  const [usernameKeyword, setUsernameKeyword] = useState("");
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUsernameQuery(e.target.value);
-  };
-
-  const { data: users } = useGetUsersByUsernameQuery(
+  const { data: users, isLoading } = useGetUsersByUsernameQuery(
     {
       params: {
         q: usernameKeyword,
@@ -31,63 +29,24 @@ function App() {
     { skip: !usernameKeyword },
   );
 
-  const handleClick = () => {
-    setUsernameKeyword(usernameQuery);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      handleClick();
-    }
-    if (e.key === "Escape") {
-      setUsernameQuery("");
-      setUsernameKeyword("");
-    }
+  const handleSubmit = (keyword: string) => {
+    setUsernameKeyword(keyword);
   };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        width: "400px",
-        gap: "16px",
-      }}
-    >
-      <TextField
-        onKeyDown={handleKeyDown}
-        value={usernameQuery}
-        onChange={handleChange}
-        placeholder="Enter Username"
-      />
-      <Button onClick={handleClick} variant="contained">
-        Search
-      </Button>
+    <RootBox>
+      <SearchBar onSubmit={handleSubmit} />
+      {isLoading && <Loader />}
 
       {usernameKeyword && users?.length > 0 && (
         <>
           <Typography variant="body1">{`Showing users for "${usernameKeyword}"`}</Typography>
-          {users.map((user: any) => {
-            return (
-              <Accordion key={user.id}>
-                <AccordionSummary
-                  tabIndex={0}
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                  sx={{ backgroundColor: "#F2F2F2" }}
-                >
-                  <Typography variant="body1">{user.login}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Repos username={user.login} />
-                </AccordionDetails>
-              </Accordion>
-            );
-          })}
+          {users.map((user: IReduxUser) => (
+            <UserAccordion key={user.id} user={user} />
+          ))}
         </>
       )}
-    </Box>
+    </RootBox>
   );
 }
 
