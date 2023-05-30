@@ -10,6 +10,20 @@ const RootBox = styled(Box)({
   flexDirection: "column",
   width: "400px",
   gap: "16px",
+  padding: "16px",
+  margin: "0 auto",
+
+  "@media (min-width: 600px)": {
+    // Styles for tablet screens and above
+    width: "600px",
+    padding: "24px",
+  },
+
+  "@media (min-width: 800px)": {
+    // Styles for desktop screens and above
+    width: "800px",
+    padding: "32px",
+  },
 });
 
 const Loader = styled(CircularProgress)({
