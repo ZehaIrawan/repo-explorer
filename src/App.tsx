@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { useGetUsersByUsernameQuery } from "./redux/user.query";
+import { useGetUsersByUsernameQuery } from "./redux/user/user.query";
 
 import Repos from "./components/Repos";
 
@@ -39,6 +39,10 @@ function App() {
     if (e.key === "Enter") {
       handleClick();
     }
+    if (e.key === "Escape") {
+      setUsernameQuery("");
+      setUsernameKeyword("");
+    }
   };
 
   return (
@@ -67,6 +71,7 @@ function App() {
             return (
               <Accordion key={user.id}>
                 <AccordionSummary
+                  tabIndex={0}
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
                   id="panel1a-header"

@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import { useGetReposByUsernameQuery } from "../redux/repo.query";
+import { useGetReposByUsernameQuery } from "../redux/repo/repo.query";
 import StarIcon from "@mui/icons-material/Star";
 
 interface ReposProps {
@@ -17,7 +17,7 @@ const Repos = (props: ReposProps) => {
 
   return (
     <>
-      {repos.map((repo: any) => {
+      {repos?.map((repo: any) => {
         return (
           <Box
             key={repo.id}
