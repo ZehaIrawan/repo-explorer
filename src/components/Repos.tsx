@@ -45,10 +45,12 @@ const Repos = (props: ReposProps) => {
           <RepoBox key={repo.id}>
             <RepoDetailsBox>
               <Typography variant="h5">{repo.name}</Typography>
-              <div style={{ display: "flex" }}>
-                <Typography variant="h5">{repo.stargazers_count}</Typography>
-                <StarIcon />
-              </div>
+              {repo.stargazers_count > 0 && (
+                <div style={{ display: "flex", alignItems: "center" }}>
+                  <Typography variant="h5">{repo.stargazers_count}</Typography>
+                  <StarIcon />
+                </div>
+              )}
             </RepoDetailsBox>
             <Typography variant="caption">{repo.description}</Typography>
           </RepoBox>

@@ -10,7 +10,8 @@ export const repoApi = createApi({
     fetchBaseQuery({
       baseUrl,
       prepareHeaders: (headers) => {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    const token =  import.meta.env.VITE_GITHUB_TOKEN;
+
         if(token){
           headers.set("Authorization", `Bearer ${token}`);
         }

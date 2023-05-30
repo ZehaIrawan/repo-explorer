@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { IReduxUserParams,IReduxUserResponse,IReduxUser} from './user.d'
+// import { IReduxUserParams,IReduxUserResponse,IReduxUser} from './user.d'
 
 const baseUrl = "https://api.github.com/";
 
@@ -10,7 +10,8 @@ export const userApi = createApi({
     fetchBaseQuery({
       baseUrl,
       prepareHeaders: (headers) => {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    const token =  import.meta.env.VITE_GITHUB_TOKEN;
+
         if(token){
           headers.set("Authorization", `Bearer ${token}`);
         }

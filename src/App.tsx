@@ -2,7 +2,7 @@ import { Box, Typography, styled, CircularProgress } from "@mui/material";
 import { useState } from "react";
 import { useGetUsersByUsernameQuery } from "./redux/user/user.query";
 import UserAccordion from "./components/UserAccordion";
-import SearchBar from "./components/Searchbar";
+import SearchBar from "./components/SearchBar";
 import { IReduxUser } from "./redux/user/user.d";
 
 const RootBox = styled(Box)({
