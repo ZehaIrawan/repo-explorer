@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery, retry } from "@reduxjs/toolkit/query/react";
-import { IReduxUserParams,IReduxUserResponse} from './user.d'
+import { IReduxUserParams,IReduxUserResponse,IReduxUser} from './user.d'
 
 const baseUrl = "https://api.github.com/";
 
@@ -20,7 +20,7 @@ export const userApi = createApi({
     { maxRetries: 3 },
   ),
   endpoints: (builder) => ({
-    getUsersByUsername: builder.query<IReduxUserResponse,IReduxUserParams>({
+    getUsersByUsername: builder.query({
       query: (arg) => ({
         url: `search/users`,
         method: "GET",
